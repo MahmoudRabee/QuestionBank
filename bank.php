@@ -15,36 +15,13 @@ $dsn = 'mysql:host=localhost;dbname=qbank'; // Data sourse name
 
 		echo 'Failed' . $e->getMessage();
 	}
-creatSsubjectsTable($db);
+
 creatGradeTable($db);
 creatStudentTable($db) ; 
 creatQestionsTable($db);
 creatProfable($db) ;
 creatResultTable($db);
-FillSubjectTable($db);
 FillGradeTable($db);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -55,7 +32,6 @@ function creatStudentTable($db) {
     $sql = "CREATE TABLE IF NOT EXISTS Students (
     Student_id INT(6)  PRIMARY KEY, 
     Name VARCHAR(30) NOT NULL,
-    
     Grade CHAR(15) NOT NULL,
       FOREIGN KEY (Grade) REFERENCES Grede(Grade)
     )";
@@ -79,8 +55,7 @@ function creatProfable($db) {
     Prof_id INT(6)  PRIMARY KEY, 
     Name VARCHAR(30) NOT NULL,
     
-    Sub_id INT(1) NOT NULL,
-      FOREIGN KEY (Sub_id) REFERENCES Subjects(Sub_id)
+    course VARCHAR(30) NOT NULL
     )";
 
     // use exec() because no results are returned
@@ -94,27 +69,6 @@ function creatProfable($db) {
 		echo 'Failed' . $e->getMessage();
 	}
 }
-
-function creatSsubjectsTable($db) {
-	try {
-		    // sql to create table
-    $sql = "CREATE TABLE IF NOT EXISTS Subjects (
-    Sub_id INT(6)  PRIMARY KEY, 
-    Name VARCHAR(30) NOT NULL
-    )";
-
-    // use exec() because no results are returned
-    $db->exec($sql);
-    echo "Table Subjects created successfully";
-    echo "<br/>";
-	}
-	
-	catch (PDOException $e){
-
-		echo 'Failed' . $e->getMessage();
-	}
-}
-
 function creatQestionsTable($db) {
 	try {
 		    // sql to create table
@@ -128,8 +82,7 @@ function creatQestionsTable($db) {
     correctAns INT(1) NOT NULL ,  
     Level INT(1) NOT NULL , 
 
-    Sub_id INT(6)  NOT NULL,
-    FOREIGN KEY (Sub_id) REFERENCES Subjects(Sub_id)
+    course VARCHAR(30)  NOT NULL
     )";
 
     // use exec() because no results are returned
@@ -143,18 +96,16 @@ function creatQestionsTable($db) {
 		echo 'Failed' . $e->getMessage();
 	}
 }
-
 function creatGradeTable($db) {
 	try {
 		    // sql to create table
+  
     $sql = "CREATE TABLE IF NOT EXISTS Grede (
-    Grade  CHAR(15)  PRIMARY KEY, 
-     Sub1_id INT(1) NOT NULL,
-     Sub2_id INT(1) NOT NULL,
-     Sub3_id INT(1) NOT NULL,
-      FOREIGN KEY (Sub1_id) REFERENCES Subjects(Sub_id),
-      FOREIGN KEY (Sub2_id) REFERENCES Subjects(Sub_id),
-      FOREIGN KEY (Sub3_id) REFERENCES Subjects(Sub_id)
+
+    Grade  CHAR(15)  PRIMARY KEY,
+    course1 VARCHAR(20) NOT NULL , 
+    course2 VARCHAR(20) NOT NULL , 
+    course3 VARCHAR(20) NOT NULL 
     )";
 
     // use exec() because no results are returned
@@ -168,16 +119,13 @@ function creatGradeTable($db) {
 		echo 'Failed' . $e->getMessage();
 	}
 }
-
 function creatResultTable($db) {
 	try {
 		    // sql to create table
     $sql = "CREATE TABLE IF NOT EXISTS Result (
     Student_id INT(6)  PRIMARY KEY,
-     Sub_id INT(6) NOT NULL ,
-     Result INT(3) NOT NULL,
-      FOREIGN KEY (Student_id) REFERENCES Students(Student_id),
-      FOREIGN KEY (Sub_id) REFERENCES Subjects(Sub_id)
+      course VARCHAR(30) NOT NULL,
+     Result INT(3) NOT NULL
     )";
 
     // use exec() because no results are returned
@@ -191,53 +139,16 @@ function creatResultTable($db) {
 		echo 'Failed' . $e->getMessage();
 	}
 }
-  
-function FillSubjectTable($db) {
-	try {
-		   $db->beginTransaction();
-    // our SQL statements
-    $db->exec("INSERT INTO Subjects (Sub_id, Name) 
-    VALUES (1, 'electronics')");
-  $db->exec("INSERT INTO Subjects (Sub_id, Name) 
-    VALUES (2, 'antenna')");
-  $db->exec("INSERT INTO Subjects (Sub_id, Name) 
-    VALUES (3, 'DSP')");
-  $db->exec("INSERT INTO Subjects (Sub_id, Name) 
-    VALUES (4, 'High voltage')");
-  $db->exec("INSERT INTO Subjects (Sub_id, Name) 
-    VALUES (5, 'machine')");
-  $db->exec("INSERT INTO Subjects (Sub_id, Name) 
-    VALUES (6, 'distribution')");
-  $db->exec("INSERT INTO Subjects (Sub_id, Name) 
-    VALUES (7, 'Database')");
-  $db->exec("INSERT INTO Subjects (Sub_id, Name) 
-    VALUES (8, 'control')");
-  $db->exec("INSERT INTO Subjects (Sub_id, Name) 
-    VALUES (9, 'Data structures')");
-
-    // commit the transaction
-    $db->commit();
-    echo "add subjects created successfully";
-    echo "<br/>";
-	}
-	
-	catch (PDOException $e){
-
-		echo 'Failed' . $e->getMessage();
-	}
-}
-
-
 function FillGradeTable($db) {
 	try {
 		   $db->beginTransaction();
     // our SQL statements
-    $db->exec("INSERT INTO Grede (Grade, Sub1_id,Sub2_id, Sub3_id ) 
-    VALUES ('communication', 1,2,3)");
-     $db->exec("INSERT INTO Grede (Grade, Sub1_id,Sub2_id, Sub3_id ) 
-    VALUES ('power', 4,5,6)");
-     $db->exec("INSERT INTO Grede (Grade, Sub1_id,Sub2_id, Sub3_id ) 
-    VALUES ('computer', 7,8,9)");
+    $db->exec("INSERT INTO Grede (Grade, course1,course2, course3 ) 
+    VALUES ('communication', 'electronics','antenna','DSP')");
+     $db->exec("INSERT INTO Grede (Grade, course1,course2, course3 ) 
+    VALUES ('power', 'High voltage','machine','distribution')");
+     $db->exec("INSERT INTO Grede (Grade, course1,course2, course3 ) 
+    VALUES ('computer', 'Data structures','control','Database')");
     // commit the transaction
     $db->commit();
     echo "add Grade created successfully";
