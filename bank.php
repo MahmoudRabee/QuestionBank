@@ -20,6 +20,24 @@ creatProfable($db) ;
 creatSsubjectsTable($db);
 creatQestionsTable($db);
 creatGradeTable($db);
+creatResultTable($db);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function creatStudentTable($db) {
 	try {
@@ -28,12 +46,14 @@ function creatStudentTable($db) {
     Student_id INT(6)  PRIMARY KEY, 
     Name VARCHAR(30) NOT NULL,
     
-    Grade_id INT(1) NOT NULL 
+    Grade CHAR(15) NOT NULL,
+      FOREIGN KEY (Grade) REFERENCES Grede(Grade)
     )";
 
     // use exec() because no results are returned
     $db->exec($sql);
     echo "Table Students created successfully";
+    echo "<br/>";
 
 	}
 	
@@ -49,13 +69,14 @@ function creatProfable($db) {
     Prof_id INT(6)  PRIMARY KEY, 
     Name VARCHAR(30) NOT NULL,
     
-    Sub_id INT(1) NOT NULL 
+    Sub_id INT(1) NOT NULL,
+      FOREIGN KEY (Sub_id) REFERENCES Subjects(Sub_id)
     )";
 
     // use exec() because no results are returned
     $db->exec($sql);
     echo "Table Prof created successfully";
-
+    echo "<br/>";
 	}
 	
 	catch (PDOException $e){
@@ -75,7 +96,7 @@ function creatSsubjectsTable($db) {
     // use exec() because no results are returned
     $db->exec($sql);
     echo "Table Subjects created successfully";
-
+    echo "<br/>";
 	}
 	
 	catch (PDOException $e){
@@ -104,7 +125,7 @@ function creatQestionsTable($db) {
     // use exec() because no results are returned
     $db->exec($sql);
     echo "Table questions created successfully";
-
+    echo "<br/>";
 	}
 	
 	catch (PDOException $e){
@@ -117,7 +138,7 @@ function creatGradeTable($db) {
 	try {
 		    // sql to create table
     $sql = "CREATE TABLE IF NOT EXISTS Grede (
-    Grade_id INT(6)  PRIMARY KEY, 
+    Grade  CHAR(15)  PRIMARY KEY, 
      Sub1_id INT(1) NOT NULL,
      Sub2_id INT(1) NOT NULL,
      Sub3_id INT(1) NOT NULL,
@@ -129,7 +150,7 @@ function creatGradeTable($db) {
     // use exec() because no results are returned
     $db->exec($sql);
     echo "Table Grade created successfully";
-
+    echo "<br/>";
 	}
 	
 	catch (PDOException $e){
@@ -138,4 +159,27 @@ function creatGradeTable($db) {
 	}
 }
 
+function creatResultTable($db) {
+	try {
+		    // sql to create table
+    $sql = "CREATE TABLE IF NOT EXISTS Result (
+    Student_id INT(6)  PRIMARY KEY,
+     Sub_id INT(6) NOT NULL ,
+     Result INT(3) NOT NULL
+      FOREIGN KEY (Student_id) REFERENCES Students(Student_id),
+      FOREIGN KEY (Sub_id) REFERENCES Subjects(Sub_id)
+    )";
+
+    // use exec() because no results are returned
+    $db->exec($sql);
+    echo "Table Result created successfully";
+    echo "<br/>";
+	}
+	
+	catch (PDOException $e){
+
+		echo 'Failed' . $e->getMessage();
+	}
+}
+   
 ?>
