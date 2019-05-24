@@ -21,7 +21,8 @@ creatSsubjectsTable($db);
 creatQestionsTable($db);
 creatGradeTable($db);
 creatResultTable($db);
-
+FillGradeTable($db);
+FillSubjectTable($db);
 
 
 
@@ -173,6 +174,64 @@ function creatResultTable($db) {
     // use exec() because no results are returned
     $db->exec($sql);
     echo "Table Result created successfully";
+    echo "<br/>";
+	}
+	
+	catch (PDOException $e){
+
+		echo 'Failed' . $e->getMessage();
+	}
+}
+
+function FillSubjectTable($db) {
+	try {
+		   $db->beginTransaction();
+    // our SQL statements
+    $db->exec("INSERT INTO subjects (Sub_id, Name) 
+    VALUES (1, 'electronics')");
+  $db->exec("INSERT INTO subjects (Sub_id, Name) 
+    VALUES (2, 'antenna')");
+  $db->exec("INSERT INTO subjects (Sub_id, Name) 
+    VALUES (3, 'DSP')");
+  $db->exec("INSERT INTO subjects (Sub_id, Name) 
+    VALUES (4, 'High voltage')");
+  $db->exec("INSERT INTO subjects (Sub_id, Name) 
+    VALUES (5, 'machine')");
+  $db->exec("INSERT INTO subjects (Sub_id, Name) 
+    VALUES (6, 'distribution')");
+  $db->exec("INSERT INTO subjects (Sub_id, Name) 
+    VALUES (7, 'Database')");
+  $db->exec("INSERT INTO subjects (Sub_id, Name) 
+    VALUES (8, 'control')");
+  $db->exec("INSERT INTO subjects (Sub_id, Name) 
+    VALUES (9, 'Data structures')");
+
+    // commit the transaction
+    $db->commit();
+    echo "add subjects created successfully";
+    echo "<br/>";
+	}
+	
+	catch (PDOException $e){
+
+		echo 'Failed' . $e->getMessage();
+	}
+}
+
+
+function FillGradeTable($db) {
+	try {
+		   $db->beginTransaction();
+    // our SQL statements
+    $db->exec("INSERT INTO Grede (Grade_id, Sub1_id,Sub2_id, Sub3_id ) 
+    VALUES ('communication', 1,2,3)");
+     $db->exec("INSERT INTO Grede (Grade_id, Sub1_id,Sub2_id, Sub3_id ) 
+    VALUES ('power', 4,5,6)");
+     $db->exec("INSERT INTO Grede (Grade_id, Sub1_id,Sub2_id, Sub3_id ) 
+    VALUES ('computer', 7,8,9)");
+    // commit the transaction
+    $db->commit();
+    echo "add Grade created successfully";
     echo "<br/>";
 	}
 	
