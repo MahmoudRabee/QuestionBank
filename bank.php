@@ -9,20 +9,29 @@ $dsn = 'mysql:host=localhost;dbname=qbank'; // Data sourse name
 	try {
 		$db = new PDO($dsn , $user , $pass) ; // start anew connection with PDO class
 		echo 'You are connected successfully';
+		echo "<br/>";
 	}
 	catch (PDOException $e){
 
 		echo 'Failed' . $e->getMessage();
 	}
-
-creatStudentTable($db) ; 
-creatProfable($db) ; 
 creatSsubjectsTable($db);
-creatQestionsTable($db);
 creatGradeTable($db);
+creatStudentTable($db) ; 
+creatQestionsTable($db);
+creatProfable($db) ;
 creatResultTable($db);
-FillGradeTable($db);
 FillSubjectTable($db);
+FillGradeTable($db);
+
+
+
+
+
+
+
+
+
 
 
 
@@ -166,7 +175,7 @@ function creatResultTable($db) {
     $sql = "CREATE TABLE IF NOT EXISTS Result (
     Student_id INT(6)  PRIMARY KEY,
      Sub_id INT(6) NOT NULL ,
-     Result INT(3) NOT NULL
+     Result INT(3) NOT NULL,
       FOREIGN KEY (Student_id) REFERENCES Students(Student_id),
       FOREIGN KEY (Sub_id) REFERENCES Subjects(Sub_id)
     )";
@@ -182,28 +191,28 @@ function creatResultTable($db) {
 		echo 'Failed' . $e->getMessage();
 	}
 }
-
+  
 function FillSubjectTable($db) {
 	try {
 		   $db->beginTransaction();
     // our SQL statements
-    $db->exec("INSERT INTO subjects (Sub_id, Name) 
+    $db->exec("INSERT INTO Subjects (Sub_id, Name) 
     VALUES (1, 'electronics')");
-  $db->exec("INSERT INTO subjects (Sub_id, Name) 
+  $db->exec("INSERT INTO Subjects (Sub_id, Name) 
     VALUES (2, 'antenna')");
-  $db->exec("INSERT INTO subjects (Sub_id, Name) 
+  $db->exec("INSERT INTO Subjects (Sub_id, Name) 
     VALUES (3, 'DSP')");
-  $db->exec("INSERT INTO subjects (Sub_id, Name) 
+  $db->exec("INSERT INTO Subjects (Sub_id, Name) 
     VALUES (4, 'High voltage')");
-  $db->exec("INSERT INTO subjects (Sub_id, Name) 
+  $db->exec("INSERT INTO Subjects (Sub_id, Name) 
     VALUES (5, 'machine')");
-  $db->exec("INSERT INTO subjects (Sub_id, Name) 
+  $db->exec("INSERT INTO Subjects (Sub_id, Name) 
     VALUES (6, 'distribution')");
-  $db->exec("INSERT INTO subjects (Sub_id, Name) 
+  $db->exec("INSERT INTO Subjects (Sub_id, Name) 
     VALUES (7, 'Database')");
-  $db->exec("INSERT INTO subjects (Sub_id, Name) 
+  $db->exec("INSERT INTO Subjects (Sub_id, Name) 
     VALUES (8, 'control')");
-  $db->exec("INSERT INTO subjects (Sub_id, Name) 
+  $db->exec("INSERT INTO Subjects (Sub_id, Name) 
     VALUES (9, 'Data structures')");
 
     // commit the transaction
@@ -223,11 +232,11 @@ function FillGradeTable($db) {
 	try {
 		   $db->beginTransaction();
     // our SQL statements
-    $db->exec("INSERT INTO Grede (Grade_id, Sub1_id,Sub2_id, Sub3_id ) 
+    $db->exec("INSERT INTO Grede (Grade, Sub1_id,Sub2_id, Sub3_id ) 
     VALUES ('communication', 1,2,3)");
-     $db->exec("INSERT INTO Grede (Grade_id, Sub1_id,Sub2_id, Sub3_id ) 
+     $db->exec("INSERT INTO Grede (Grade, Sub1_id,Sub2_id, Sub3_id ) 
     VALUES ('power', 4,5,6)");
-     $db->exec("INSERT INTO Grede (Grade_id, Sub1_id,Sub2_id, Sub3_id ) 
+     $db->exec("INSERT INTO Grede (Grade, Sub1_id,Sub2_id, Sub3_id ) 
     VALUES ('computer', 7,8,9)");
     // commit the transaction
     $db->commit();
@@ -239,6 +248,5 @@ function FillGradeTable($db) {
 
 		echo 'Failed' . $e->getMessage();
 	}
-}
-   
+} 
 ?>
