@@ -7,7 +7,7 @@ echo '
 	<h1>Welcom in Question Bank</h1>
 	<p>This is website you can take an online auto generated exam </p>
 
-<form action="test.html">
+<form action="Student.html">
   <input type="submit" value="Student">
 </form>
 <form action="test.php">
