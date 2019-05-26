@@ -10,7 +10,7 @@ echo '
 <form action="Student.html">
   <input type="submit" value="Student">
 </form>
-<form action="test.php">
+<form action="Prof.html">
   <input type="submit" value="doctor">
 </form>
 

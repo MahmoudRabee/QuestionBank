@@ -37,7 +37,7 @@ function creatProfable($db) {
 		    // sql to create table
         $sql = "CREATE TABLE IF NOT EXISTS Prof (
         Prof_id INT(6)  PRIMARY KEY, 
-        Prof_pass INT(30) NOT NULL,
+        Prof_pass VARCHAR(30) NOT NULL,
         Name VARCHAR(30) NOT NULL,
         course VARCHAR(30) NOT NULL
     )";
