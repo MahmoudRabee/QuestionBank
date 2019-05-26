@@ -106,9 +106,10 @@ function creatResultTable($db) {
 	try {
 		    // sql to create table
     $sql = "CREATE TABLE IF NOT EXISTS Result (
-    Student_id INT(6)  PRIMARY KEY,
+    Student_id INT(6)  NOT NULL,
       course VARCHAR(30) NOT NULL,
-     Result INT(3) NOT NULL
+     Result INT(3) NOT NULL,
+     FOREIGN KEY (Student_id) REFERENCES Students(Student_id)
     )";
 
     // use exec() because no results are returned
