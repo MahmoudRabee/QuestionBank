@@ -1,8 +1,8 @@
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 	Name:<br>
-	<input type="text" name="name" value="Name"><br><br>
+	<input type="text" name="name" ><br><br>
 	ID:<br>
-	<input type="text" name="id" value="ID"><br><br>
+	<input type="text" name="id" ><br><br>
 	Password:<br>
 	<input type="Password" name="pass" ><br><br>
 	Grade:<br>
@@ -20,14 +20,20 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 	include  'connectDB.php' ; #connect database
 
 	if (checkid($_POST['id'],$db)){
-		register($_POST['name'] , $_POST['id'] , $_POST['pass'], $_POST['Grade'],$db);
-		echo '
-		<form action="studentLogin.php">
-		You have created an account successfully 
-		<input type="submit" value="Login">
-		</form>
-		';
+		if (strlen($_POST['name']) == 0 || strlen($_POST['id']) == 0 || strlen($_POST['pass']) == 0 ){
+			echo "Data missing !!! ";
+		
 
+		} else {
+			register($_POST['name'] , $_POST['id'] , $_POST['pass'], $_POST['Grade'],$db);
+			echo '
+			<form action="studentLogin.php">
+			You have created an account successfully 
+			<input type="submit" value="Login">
+			</form>
+			';
+
+		} 
 	} else {
 		echo "this student ID is allready exist"."<br>";
 	}

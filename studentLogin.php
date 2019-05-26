@@ -1,3 +1,7 @@
+<?php 
+session_start(); #resume the session 
+if (!(isset($_SESSION["studentName"]))){ ?>
+
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 
 	Name:<br>
@@ -7,12 +11,9 @@
 	<input type="Password" name="pass" ><br><br>
 	<input type="submit" value="Login">
 </form> 
-
-
 <?php
 echo "stuudent login page";
 if ($_SERVER['REQUEST_METHOD']=='POST'){
-session_start() ; #start the session 
 include  'connectDB.php' ; #connect database
 if (check($_POST['pass'],$_POST['name'],$db)){
 	echo "You have loged in successfuly"."<br>";
@@ -31,6 +32,20 @@ echo ' wait to redirect to control page.';
 
 }
 
+
+
+
+
+
+
+}
+
+
+else {
+	echo "you are logged in";
+	header( "refresh:5;url=studentControl.php" );# go to control pages
+	echo ' wait to redirect to control page.';
+}
 
 
 function check( $value,$name,$db)
@@ -73,6 +88,5 @@ function getid( $value,$db)
 	$result = $f[$columnName];
 	return $result;
 }
-
-
 ?>
+
