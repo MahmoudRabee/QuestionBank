@@ -7,10 +7,10 @@ $numberOfChupter =getNOchapter($_SESSION["course"],$db);
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 	Question : <input type="text" name="question" size="40" ><br><br>
-	Answer1: <input type="text" name="pass" size="40" required><br><br>
-	Answer2: <input type="text" name="pass" size="30" required><br><br>
-	Answer3: <input type="text" name="pass" size="20" required><br><br>
-	Answer4: <input type="text" name="pass" size="10" required><br><br>
+	Answer1: <input type="text" name="ans1" size="40" required><br><br>
+	Answer2: <input type="text" name="ans2" size="40" required><br><br>
+	Answer3: <input type="text" name="ans3" size="40" required><br><br>
+	Answer4: <input type="text" name="ans4" size="40" required><br><br>
 	Correct answer : <select name="correctAnswer" required>
 		<option disabled selected value> -- select an option -- </option>
 		<option value='1'>1</option>
@@ -35,10 +35,23 @@ $numberOfChupter =getNOchapter($_SESSION["course"],$db);
 
 	<input type="submit" name="add" value="Add Question">
 
-	
+	<a href="http://localhost:8080/QuestionBank/profControl.php">Back to control page</a>
 </form> 
 
 <?php
+if ($_SERVER['REQUEST_METHOD']=='POST'){
+$cans = (int) $_POST["correctAnswer"] ;
+if ($_POST["level"] == "hard") {$qlevel = 3;}
+elseif ($_POST["level"] == "meduim") {$qlevel = 2;}
+elseif ($_POST["level"] == "easy") {$qlevel = 1;}
+$qcourse = $_SESSION["course"] ; 
+$qchapter =(int) $_POST["Chapter"];
+$qid = (getLevelID($qcourse,$qlevel,$qchapter,$db))+1 ; 
+addQuestion($_POST["question"] , $_POST["ans1"] ,$_POST["ans2"],$_POST["ans3"], $_POST["ans4"],$cans , $qlevel ,$qchapter,$qid ,$qcourse,$db);
+echo "Question added successfuly"."<br>";
+}
+
+
 }
 else if ((isset($_SESSION["studentName"]))){
 	echo "you are logged in as student";
@@ -77,4 +90,31 @@ $number_of_rows = $result->fetchColumn();
 	// $result = $f[$columnName];
 	return $number_of_rows;
 }
+function getLevelID($course,$level,$chapter,$db)
+{
+
+
+
+$tableName="questions" ;
+
+$sql = "SELECT count(*) FROM `$tableName`  WHERE Level = '$level' AND chapter ='$chapter'  AND course='$course' "; 
+$result = $db->prepare($sql); 
+$result->execute(); 
+$number_of_rows = $result->fetchColumn(); 
+
+	return $number_of_rows;
+}
+function addQuestion($question , $answer1 ,$answer2,$answer3, $answer4, $correctAns , $Level ,$chapter,$ID ,$course,$db)
+	{
+		try {
+
+    // our SQL statements
+			$db->exec("INSERT INTO questions(question,answer1, answer2,answer3,answer4,correctAns,Level,chapter,ID,course ) 
+				VALUES ('".$question."','".$answer1."','".$answer2."','".$answer3."','".$answer4."','".$correctAns."','".$Level."','".$chapter."','".$ID."','".$course."')");   
+		}
+		catch (PDOException $e){
+
+			echo 'Failed' . $e->getMessage();
+		}
+	}
 ?>
