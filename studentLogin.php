@@ -1,6 +1,9 @@
 <?php 
 session_start(); #resume the session 
-if (!(isset($_SESSION["studentName"]))){ ?>
+if (isset($_SESSION["profName"])){echo "you are logged in as professor";
+	header( "refresh:5;url=profControl.php" );# go to control pages
+	echo ' wait to redirect to professor control page.';}
+else if (!(isset($_SESSION["studentName"]))){ ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 

@@ -19,7 +19,7 @@ if (check($_POST['pass'],$_POST['name'],$db)){
 	echo "You have loged in successfuly"."<br>";
 	$_SESSION["profName"] = $_POST['name'];
 	$_SESSION["profID"] = getid( $_POST['pass'],$db);
-	$_SESSION["profCourse"] = getCourse( $_SESSION["profID"],$db);
+	
 
 header( "refresh:5;url=profControl.php" );# go to control pages
 echo ' wait to redirect to control page.';
@@ -32,15 +32,14 @@ echo ' wait to redirect to control page.';
 
 }
 
-
-
-
-
-
-
 }
 
+else if (isset($_SESSION["studentName"])){
+echo "you are logged in as student";
+	header( "refresh:5;url=studentControl.php" );# go to control pages
+	echo ' wait to redirect to control page.';
 
+}
 else {
 	echo "you are logged in";
 	header( "refresh:5;url=profControl.php" );# go to control pages
@@ -68,16 +67,7 @@ function check( $value,$name,$db)
 	}
 }
 
-function getCourse( $value,$db)
-{
-	$tableName = 'Prof' ;
-	$prop      = 'Prof_id' ; 
-	$columnName= 'course';
-	$q = $db->query("SELECT `$columnName` FROM `$tableName` WHERE $prop='".$value."'");
-	$f = $q->fetch();
-	$result = $f[$columnName];
-	return $result;
-}
+
 function getid( $value,$db)
 {
 	$tableName = 'Prof' ;

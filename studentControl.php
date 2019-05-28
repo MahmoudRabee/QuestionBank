@@ -40,7 +40,7 @@ if (isset($_SESSION["studentName"])){
 			if (isset($_POST['Exam'])) {
 				if (Null !== getResult($_SESSION["studentID"],$_POST['course'],$db)){
 					echo "You already Take exam in this course";
-	   } else { header( "Location:exam.php" );# go to control pages }
+	   } else { header( "Location:exam.php" );# go to exam pages }
 	}}
 	else if (isset($_POST['Result'])) {
 		
@@ -57,7 +57,11 @@ if (isset($_SESSION["studentName"])){
 }
 
 
-} else {
+} 
+else if (isset($_SESSION["profName"])){echo "you are logged in as professor";
+	header( "refresh:5;url=profControl.php" );# go to control pages
+	echo ' wait to redirect to professor control page.';}
+else {
 
 	echo "You should login first".'<br>';
 header( "refresh:5;url=studentLogin.php" );# go to control pages
