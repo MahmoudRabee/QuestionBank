@@ -9,7 +9,7 @@ if (isset($_SESSION["studentName"])){
 	</fieldset>
 	<?php if ($_SESSION["studentGrade"] == 'power') {$courses = array('distribution','machine', 'High voltage');}
 	if ($_SESSION["studentGrade"] == 'communication') {$courses = array('electronics','antenna','DSP');}
-	if ($_SESSION["studentGrade"] == 'computer'){$courses = array('Database','control','Data structures');}
+	if ($_SESSION["studentGrade"] == 'computer'){$courses = array('Database','control','Datastructures');}
 	?>
 
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
