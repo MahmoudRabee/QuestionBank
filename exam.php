@@ -2,7 +2,7 @@
 session_start(); #resume the session 
 include  'connectDB.php' ; #connect database
 if (isset($_SESSION["profName"])){
-f (enoughQuestion($_SESSION["course"],$db)) {echo "there is enough question";}
+if (enoughQuestion($_SESSION["course"],$db)) {echo "there is enough question";}
 else {echo "No enough questions";}
 }
 else if ((isset($_SESSION["studentName"]))){
@@ -25,9 +25,9 @@ function enoughQuestion($course,$db)
 		$existMeduimNumber = getLevelID($course,2,$i,$db); 
 		$existHardNumber = getLevelID($course,3,$i,$db); 
 		$requirdEasyNumber = gitMinNum( $course,$i,1,$db);
-		$existMeduimNumber = gitMinNum( $course,$i,2,$db);
+		$requirdMeduimNumber = gitMinNum( $course,$i,2,$db);
 		$requirdHardNumber = gitMinNum( $course,$i,3,$db) ;
-		if ($existEasyNumber < $requirdEasyNumber || $existMeduimNumber < $existMeduimNumber || $existHardNumber < $requirdHardNumber){return False ; }
+		if ($existEasyNumber < $requirdEasyNumber || $existMeduimNumber < $requirdMeduimNumber || $existHardNumber < $requirdHardNumber){return False ; }
 	}
 	return True ; 
 
@@ -103,6 +103,53 @@ elseif ($level == 3 ){$columnName= 'hardQnum';}
 		$result = $f[$columnName];
 
 return $result ; 
+}
+
+function GenerateExam($course , $db) 
+{
+	$_SESSION["QuestionNum"] = 0 ; 
+?><form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post"><?php
+$number_of_chapters = getNOchapter( $course,$db);
+$numOFchapter = range(1,$number_of_chapters);
+shuffle($numOFchapter);
+foreach ($numOFchapter as $value){
+		$existEasyNumber = getLevelID($course,1,$value,$db); 
+		$existMeduimNumber = getLevelID($course,2,$value,$db); 
+		$existHardNumber = getLevelID($course,3,$value,$db);
+		$requirdEasyNumber = gitMinNum( $course,$value,1,$db);
+		$requirdMeduimNumber = gitMinNum( $course,$value,2,$db);
+		$requirdHardNumber = gitMinNum( $course,$value,3,$db) ;
+
+		$numOFeasyIDS = range(1,$existEasyNumber);
+		shuffle($numOFeasyIDS);
+		$easyIDS = array_slice($numOFeasyIDS,0,$requirdEasyNumber);
+		foreach ($easyIDS as $Eid){  #generate easy questions
+			generateQuestion($course , $value, 1 , $Eid , $db);
+		} 
+
+		$numOFmeduimIDS = range(1,$existMeduimNumber);
+		shuffle($numOFmeduimIDS);
+		$meduimIDS = array_slice($numOFeasyIDS,0,$requirdEasyNumber);
+		foreach ($meduimIDS as $Mid){   #generate meduim question
+			generateQuestion($course , $value, 2 , $Mid , $db);
+		} 
+
+		$numOFhardIDS = range(1,$existHardNumber);
+		shuffle($numOFhardIDS);
+		$hardIDS = array_slice($numOFeasyIDS,0,$requirdEasyNumber);
+		foreach ($hardIDS as $Hid){   #generate hard queation
+			generateQuestion($course , $value, 3 , $Hid , $db);
+		} 
+}
+
+
+
+?></form><?php 
+}
+
+function generateQuestion($course , $chapter, $level , $ID , $db)
+{
+	
 }
 
 ?>
