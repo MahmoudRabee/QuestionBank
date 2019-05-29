@@ -10,9 +10,16 @@ else {echo "No enough questions";}
 else if ((isset($_SESSION["studentName"]))){
 	if (enoughQuestion($_SESSION["course"],$db)) {echo "there is enough question";
 	GenerateExam($_SESSION["course"] , $db) ;
+if ($_SERVER['REQUEST_METHOD']=='POST') {
+if (isset($_POST['result'])) {
+	if (notMissedQuestion()) {
 	$FinalResult = viewResult(); 
 	echo "<h2>Your result is ".$FinalResult." points</h2>";
-	storeResult($FinalResult,$db) ; 
+	storeResult($FinalResult,$db) ;
+	}else {
+		echo "<h3>Please answer all Question </h3>";
+	}}}
+
 	print_r($_SESSION["correctAnswer"]);
 	print_r($_SESSION["level"]); 
 }
@@ -163,7 +170,7 @@ function GenerateExam($course , $db)
 	</form><?php 
 
 
-	if ($_SERVER['REQUEST_METHOD']=='POST') {viewResult(); }
+	
 }
 
 function generateQuestion($course , $chapter, $level , $ID , $db)
@@ -273,6 +280,16 @@ function viewResult()
 
 			echo 'Failed' . $e->getMessage();
 		}
+	}
+
+function notMissedQuestion()
+	{
+		for ($i =1 ;  $i<=6 ; $i++){
+			if (!isset($_POST["q".$i])){
+				return False ; 
+			}
+		}
+		return True ; 
 	}
 
 	?>
