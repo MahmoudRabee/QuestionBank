@@ -1,3 +1,13 @@
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 5px;
+  text-align: left;
+}
+</style>
 <?php 
 session_start(); #resume the session 
 include  'connectDB.php' ; #connect database
@@ -44,13 +54,14 @@ if (courseValid( $_SESSION["course"],$_SESSION["profName"],$db)) {
 	}
 		else {echo "Sorry this course is taken by other professor";}
 }
-	else if (isset($_POST['viewResults'])) {$_SESSION["course"]=$_POST['course'] ;echo "This is result";}
+	else if (isset($_POST['viewResults'])) {
+		if (noResult($_POST['course'],$db)){echo "<h3>There is no result to View </h3>";}
+			else {viewResult($_POST['course'],$db);}
+}
 	else if (isset($_POST['genExam'])) {$_SESSION["course"]=$_POST['course'] ;echo "generating exam";}
 	else if (isset($_POST['rules'])) {$_SESSION["course"]=$_POST['course'] ;header( "Location:examRules.php" );}  
 
-	 
-
-
+	
 }
 else if ((isset($_SESSION["studentName"]))){
 	echo "you are logged in as student";
@@ -100,5 +111,77 @@ function courseValid( $course,$profesor,$db)
 			return false ; 
 		}
 	}
+	function viewResult($course,$db)
+{
 
+try {
+   
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $stmt = $db->prepare("SELECT s.Name,
+								   r.result 
+						   	FROM Result r
+						   	JOIN Students s 
+						   		USING (Student_id)
+						   		WHERE r.course = '$course'
+						   	ORDER BY r.result
+
+						   	"); 
+    $stmt->execute();
+
+    // set the resulting array to associative
+    $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+print_r($result) ;
+echo "<br><br>";
+$allResults =$stmt->fetchAll() ; 
+print_r($allResults)  ;
+echo "<br><br>";
+
+////////////////////////////
+?><table style="width:100%">
+  <tr>
+    <th>Student Name</th>
+    <th>Result</th> 
+  </tr>
+
+  <?php foreach ($allResults as $singleResulr) {
+  	?>
+ 	<tr>
+    	<td><?php echo $singleResulr["Name"]; ?></td>
+    	<td><?php echo $singleResulr["result"]; ?></td>
+  	</tr>
+
+  <?php 
+  } ?>
+ 
+ 
+</table><?php
+//////////////////////////
+
+
+
+// print_r(new RecursiveArrayIterator($stmt->fetchAll()));
+}
+catch(PDOException $e) {
+    echo "Error: " . $e->getMessage();
+}
+}
+function noResult($course,$db)
+	{
+
+	
+		$tableName = "Result" ; 
+		$sql = "SELECT count(*) 
+				FROM `$tableName` 
+				WHERE course = '$course' "; 
+		$result = $db->prepare($sql); 
+		$result->execute(); 
+		$number_of_rows = $result->fetchColumn();
+		
+		if ($number_of_rows >0){
+			return False ; 
+		} else {
+			return True ; 
+		}
+	}
 ?>
