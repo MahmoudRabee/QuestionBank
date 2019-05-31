@@ -21,7 +21,7 @@
 					GenerateExam($_SESSION["course"] , $db) ; 
 					echo '<a href="http://localhost:8080/QuestionBank/studentControl.php">Back to control Page</a>';
 				}
-				
+
 				if ($_SERVER['REQUEST_METHOD']=='POST') {
 					if (isset($_POST['result'])) {
 						if (notMissedQuestion()) {
@@ -277,7 +277,7 @@ function generateQuestion($course , $chapter, $level , $ID , $db)
 	function viewResult()
 	{
 		$result = 0 ; 
-		for ($i =1 ;  $i<=6 ; $i++){
+		for ($i =1 ;  $i<=66 ; $i++){
 			if ($_POST["q".$i] == "ans1" ) {$answer = 1;}
 			elseif ($_POST["q".$i] == "ans2" ) {$answer = 2;}
 			elseif ($_POST["q".$i] == "ans3" ) {$answer = 3;}
@@ -288,7 +288,7 @@ function generateQuestion($course , $chapter, $level , $ID , $db)
 			}
 		}
 		return $result ; 
-		
+
 	}
 
 	function storeResult($result,$db)
@@ -309,7 +309,7 @@ function generateQuestion($course , $chapter, $level , $ID , $db)
 
 	function notMissedQuestion()
 	{
-		for ($i =1 ;  $i<=6 ; $i++){
+		for ($i =1 ;  $i<=66 ; $i++){
 			if (!isset($_POST["q".$i])){
 				return False ; 
 			}
@@ -320,7 +320,7 @@ function generateQuestion($course , $chapter, $level , $ID , $db)
 	function GenerateExamToProf($course , $db) 
 	{
 		$_SESSION["QuestionNum"] = 1 ;
-		
+
 		$number_of_chapters = getNOchapter( $course,$db);
 		$numOFchapter = range(1,$number_of_chapters);
 		shuffle($numOFchapter);
@@ -418,10 +418,10 @@ function generateQuestion($course , $chapter, $level , $ID , $db)
 		echo "</ol> ";
 		echo "</fieldset> ";
 		$_SESSION["QuestionNum"] ++ ; }
-		
 
 
-		
+
+
 
 		function getResult( $id,$course,$db)
 		{
@@ -434,6 +434,6 @@ function generateQuestion($course , $chapter, $level , $ID , $db)
 			$result = $f[$columnName];
 			return $result;
 		}
-		
+
 
 		?>
