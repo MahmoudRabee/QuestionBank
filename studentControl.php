@@ -40,7 +40,7 @@ if (isset($_SESSION["studentName"])){
 
 			if (isset($_POST['Exam'])) {
 				$_SESSION["course"] =  $_POST['course'] ; 
-				if (Null !== getResult($_SESSION["studentID"],$_POST['course'],$db)){
+				if (Null !== getResult($_SESSION["studentID"],$_SESSION["course"],$db)){
 					echo "You already Take exam in this course";
 	   } else { header( "Location:exam.php" );# go to exam pages }
 	}}

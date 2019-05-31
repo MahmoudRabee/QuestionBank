@@ -6,6 +6,7 @@ $numberOfChupter =getNOchapter($_SESSION["course"],$db);
 // echo "the number of ".$_SESSION["course"]."  table os :".getNOchapter( $_SESSION["course"],$db);
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+	<h3> Write Question informations </h3>
 	Question : <input type="text" name="question" size="40" ><br><br>
 	Answer1: <input type="text" name="ans1" size="40" required><br><br>
 	Answer2: <input type="text" name="ans2" size="40" required><br><br>
@@ -17,13 +18,13 @@ $numberOfChupter =getNOchapter($_SESSION["course"],$db);
 		<option value='2'>2</option>
 		<option value='3'>3</option>
 		<option value='4'>4</option>
-	</select><br> 
+	</select><br><br>
 	Difficulty Level : <select name="level" required>
 		<option disabled selected value> -- select an option -- </option>
 		<option value="hard">Hard</option>
 		<option value="meduim">Meduim</option>
 		<option value="easy">Easy</option>
-	</select><br>
+	</select><br><br>
 
 
 		Chapter : <select name="Chapter" required>
@@ -31,11 +32,11 @@ $numberOfChupter =getNOchapter($_SESSION["course"],$db);
 		<?php for ($i = 1 ; $i<=$numberOfChupter ; $i++) {?>
 		<option value='<?php echo $i; ?>'><?php echo $i; ?></option>
 		<?php } ?>
-	</select><br> 
+	</select><br><br>
 
 	<input type="submit" name="add" value="Add Question">
 
-	<a href="http://localhost:8080/QuestionBank/profControl.php">Back to control page</a>
+	<br><br><a href="http://localhost:8080/QuestionBank/profControl.php">Back to control page</a>
 </form> 
 
 <?php
@@ -117,4 +118,6 @@ function addQuestion($question , $answer1 ,$answer2,$answer3, $answer4, $correct
 			echo 'Failed' . $e->getMessage();
 		}
 	}
+
+
 ?>

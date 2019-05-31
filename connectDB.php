@@ -7,8 +7,6 @@
 
 	try {
 		$db = new PDO($dsn , $user , $pass) ; // start anew connection with PDO class
-		echo 'You are connected successfully';
-		echo "<br/>";
 	}
 	catch (PDOException $e){
 

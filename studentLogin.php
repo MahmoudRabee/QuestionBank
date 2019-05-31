@@ -6,7 +6,7 @@ if (isset($_SESSION["profName"])){echo "you are logged in as professor";
 else if (!(isset($_SESSION["studentName"]))){ ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-
+    <h3> Please write your login info :</h3><br>
 	Name:<br>
 	<input type="text" name="name" value="Name"><br>
 
@@ -15,7 +15,7 @@ else if (!(isset($_SESSION["studentName"]))){ ?>
 	<input type="submit" value="Login">
 </form> 
 <?php
-echo "stuudent login page";
+
 if ($_SERVER['REQUEST_METHOD']=='POST'){
 include  'connectDB.php' ; #connect database
 if (check($_POST['pass'],$_POST['name'],$db)){
@@ -29,9 +29,16 @@ echo ' wait to redirect to control page.';
 
 }else {
 	echo "Student Name or ID is wrong" . "<br>";
+	echo "If you have not account please regiter ";
+echo '<a href="http://localhost:8080/QuestionBank/studentReg.php">Here</a><br>';
 }
 
 
+
+}
+else {
+echo "If you have not account please regiter ";
+echo '<a href="http://localhost:8080/QuestionBank/studentReg.php">Here</a><br>';
 
 }
 
@@ -91,5 +98,6 @@ function getid( $value,$db)
 	$result = $f[$columnName];
 	return $result;
 }
+echo '<br><a href="http://localhost:8080/QuestionBank/bank.php">Main page</a><br>';
 ?>
 

@@ -1,4 +1,5 @@
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+	<h3> Please Write your personal information </h3><br>
 	Name:<br>
 	<input type="text" name="name" ><br><br>
 	ID:<br>
@@ -69,4 +70,6 @@ function checkid( $value,$db)
 		return false ; 
 	}
 }
+
+echo '<br><a href="http://localhost:8080/QuestionBank/bank.php">Main page</a><br>';
 ?>

@@ -32,8 +32,7 @@ function creatStudentTable($db) {
 
     // use exec() because no results are returned
     $db->exec($sql);
-    echo "Table Students created successfully";
-    echo "<br/>";
+
 
 }
 
@@ -53,8 +52,7 @@ function creatProfable($db) {
 
     // use exec() because no results are returned
     $db->exec($sql);
-    echo "Table Prof created successfully";
-    echo "<br/>";
+
 }
 
 catch (PDOException $e){
@@ -81,9 +79,7 @@ function creatQestionsTable($db) {
 
     // use exec() because no results are returned
     $db->exec($sql);
-    echo "Table questions created successfully";
-    echo "<br/>";
-}
+    }
 
 catch (PDOException $e){
 
@@ -104,8 +100,7 @@ function creatGradeTable($db) {
 
     // use exec() because no results are returned
     $db->exec($sql);
-    echo "Table Grade created successfully";
-    echo "<br/>";
+   
 }
 
 catch (PDOException $e){
@@ -125,8 +120,7 @@ function creatResultTable($db) {
 
     // use exec() because no results are returned
     $db->exec($sql);
-    echo "Table Result created successfully";
-    echo "<br/>";
+    
 }
 
 catch (PDOException $e){
@@ -146,8 +140,7 @@ function FillGradeTable($db) {
         VALUES ('computer', 'Data structures','control','Database')");
     // commit the transaction
      $db->commit();
-     echo "add Grade created successfully";
-     echo "<br/>";
+     
  }
 
  catch (PDOException $e){
@@ -170,8 +163,7 @@ function createlectronicsTable($db) {
 
     // use exec() because no results are returned
     $db->exec($sql);
-    echo "Table questions created successfully";
-    echo "<br/>";
+    
 }
 
 catch (PDOException $e){
@@ -193,8 +185,7 @@ function creatcontrolTable($db) {
 
     // use exec() because no results are returned
     $db->exec($sql);
-    echo "Table questions created successfully";
-    echo "<br/>";
+    
 }
 
 catch (PDOException $e){
@@ -215,8 +206,7 @@ function createlDataStructuresTable($db) {
 
     // use exec() because no results are returned
     $db->exec($sql);
-    echo "Table questions created successfully";
-    echo "<br/>";
+    
 }
 
 catch (PDOException $e){
@@ -237,8 +227,7 @@ function createldistributionTable($db) {
 
     // use exec() because no results are returned
     $db->exec($sql);
-    echo "Table questions created successfully";
-    echo "<br/>";
+    
 }
 
 catch (PDOException $e){
@@ -259,8 +248,7 @@ function createlmachineTable($db) {
 
     // use exec() because no results are returned
     $db->exec($sql);
-    echo "Table questions created successfully";
-    echo "<br/>";
+    
 }
 
 catch (PDOException $e){
@@ -281,8 +269,7 @@ function createlHighVoltageTable($db) {
 
     // use exec() because no results are returned
     $db->exec($sql);
-    echo "Table questions created successfully";
-    echo "<br/>";
+    
 }
 
 catch (PDOException $e){
@@ -303,8 +290,7 @@ function createlDSPTable($db) {
 
     // use exec() because no results are returned
     $db->exec($sql);
-    echo "Table questions created successfully";
-    echo "<br/>";
+    
 }
 
 catch (PDOException $e){
@@ -316,7 +302,7 @@ function creatantennaTable($db) {
     try {
             // sql to create table
         $sql = "CREATE TABLE IF NOT EXISTS antenna (
-
+                                           
         chapterNumber int(5) NOT NULL ,
         hardQnum int(5) NOT NULL , 
         mediumQnum int(5) NOT NULL , 
@@ -325,8 +311,7 @@ function creatantennaTable($db) {
 
     // use exec() because no results are returned
     $db->exec($sql);
-    echo "Table questions created successfully";
-    echo "<br/>";
+    
 }
 
 catch (PDOException $e){
@@ -345,8 +330,7 @@ function creatcoursesTable($db) {
     )";
     // use exec() because no results are returned
     $db->exec($sql);
-    echo "Table Subjects created successfully";
-    echo "<br/>";
+    
     }
     
     catch (PDOException $e){
@@ -377,8 +361,7 @@ function FillSubjectTable($db) {
     VALUES (9, 'Data structures')");
     // commit the transaction
     $db->commit();
-    echo "add courses created successfully";
-    echo "<br/>";
+    
     }
     
     catch (PDOException $e){
@@ -397,8 +380,7 @@ function creatDataTable($db) {
     )";
     // use exec() because no results are returned
     $db->exec($sql);
-    echo "Table Subjects created successfully";
-    echo "<br/>";
+
     }
     
     catch (PDOException $e){

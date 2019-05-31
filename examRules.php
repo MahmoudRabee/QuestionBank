@@ -1,3 +1,9 @@
+* Exam result is 100 points <br>
+* The questions are split into three levels {Easy (one point) - Medium (two points) - Hard (three points)} <br>
+* The exam consists of 66 questions (40 easy - 18 Medium - 8 difficult) <br>
+* The number of easy, medium and difficult questions in exam should be determined from each chapter <br>
+* When determining the number of questions, you must follow the above restrictions <br>
+ <br>
 <?php 
 session_start(); #resume the session 
 include  'connectDB.php' ; #connect database
@@ -5,9 +11,9 @@ if (isset($_SESSION["profName"])){
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 	
-	Number of chapter:
+	Number of chapters:
 	<input type="number" name="number" ><br>
-	<input type="submit" name="edit" value="Edit" ><br><input type="submit" name="back" value="back to control page" ><br><br>
+	<br><input type="submit" name="edit" value="Edit" ><br><br><br><input type="submit" name="back" value="back to control page" ><br><br><br>
 <?php 
 if (isset($_POST['edit'])) {
 	addProfToCourse( $_SESSION["profName"] ,$_SESSION["course"], $db) ; 

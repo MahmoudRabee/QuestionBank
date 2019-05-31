@@ -38,7 +38,8 @@ chose the course:
 		<input type="submit" name="genExam" value="Genetate Exam"/>
 		<input type="submit" name="rules" value="examRules"/>
 		<br><br> 
-		<a href="http://localhost:8080/QuestionBank/logout.php">Logout</a>
+		<a href="http://localhost:8080/QuestionBank/logout.php">Logout</a><br>
+		<a href="http://localhost:8080/QuestionBank/bank.php">Main page</a>
 	</form>
 	<?php
 	if (isset($_POST['addQuestion'])) {
