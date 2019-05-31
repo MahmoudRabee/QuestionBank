@@ -3,7 +3,7 @@ session_start(); #resume the session
 include  'connectDB.php' ; #connect database
 if (isset($_SESSION["profName"])){
 	if (enoughQuestion($_SESSION["course"],$db)) {echo "there is enough question";
-
+GenerateExamToProf($_SESSION["course"] , $db) ;
 }
 else {echo "No enough questions";}
 }
@@ -291,5 +291,114 @@ function notMissedQuestion()
 		}
 		return True ; 
 	}
+
+	function GenerateExamToProf($course , $db) 
+{
+	$_SESSION["QuestionNum"] = 1 ;
+	
+	$number_of_chapters = getNOchapter( $course,$db);
+	$numOFchapter = range(1,$number_of_chapters);
+	shuffle($numOFchapter);
+	foreach ($numOFchapter as $value){
+		$existEasyNumber = getLevelID($course,1,$value,$db); 
+		$existMeduimNumber = getLevelID($course,2,$value,$db); 
+		$existHardNumber = getLevelID($course,3,$value,$db);
+		$requirdEasyNumber = gitMinNum( $course,$value,1,$db);
+		$requirdMeduimNumber = gitMinNum( $course,$value,2,$db);
+		$requirdHardNumber = gitMinNum( $course,$value,3,$db) ;
+
+		$numOFeasyIDS = range(1,$existEasyNumber);
+		shuffle($numOFeasyIDS);
+		$easyIDS = array_slice($numOFeasyIDS,0,$requirdEasyNumber);
+
+		foreach ($easyIDS as $Eid){  #generate easy questions
+			generateQuestionToProf($course , $value, 1 , $Eid , $db);
+		} 
+
+		$numOFmeduimIDS = range(1,$existMeduimNumber);
+		shuffle($numOFmeduimIDS);
+		$meduimIDS = array_slice($numOFmeduimIDS,0,$requirdMeduimNumber);
+		foreach ($meduimIDS as $Mid){   #generate meduim question
+			generateQuestionToProf($course , $value, 2 , $Mid , $db);
+		} 
+
+		$numOFhardIDS = range(1,$existHardNumber);
+		shuffle($numOFhardIDS);
+		$hardIDS = array_slice($numOFhardIDS,0,$requirdHardNumber);
+
+		foreach ($hardIDS as $Hid){   #generate hard queation
+			generateQuestionToProf($course , $value, 3 , $Hid , $db);
+		} 
+	}}
+function generateQuestionToProf($course , $chapter, $level , $ID , $db)
+{
+
+ # select  question
+	$tableName = 'questions' ;
+	$columnName= 'question';
+	$q = $db->query("SELECT `$columnName` FROM `$tableName` WHERE Level = '$level' AND chapter ='$chapter'  AND course='$course' AND ID='$ID' "); 
+	$f = $q->fetch();
+	$question = $f[$columnName];
+# display question in page 
+	echo "<fieldset>";
+	echo "<ol>";
+	echo "Q ".$_SESSION["QuestionNum"].": ".$question."<br><br>";
+
+
+
+
+ # select ans1 
+	$tableName = 'questions' ;
+	$columnName= 'answer1';
+	$q = $db->query("SELECT `$columnName` FROM `$tableName` WHERE Level = '$level' AND chapter ='$chapter'  AND course='$course' AND ID='$ID' "); 
+	$f = $q->fetch();
+	$ans1 = $f[$columnName];
+# display answer in page 
+	?>
+	<li><?php echo $ans1;?></li><br>
+	<?php 
+
+ #select ans2
+	$tableName = 'questions' ;
+	$columnName= 'answer2';
+	$q = $db->query("SELECT `$columnName` FROM `$tableName` WHERE Level = '$level' AND chapter ='$chapter'  AND course='$course' AND ID='$ID' "); 
+	$f = $q->fetch();
+	$ans2 = $f[$columnName];
+# display answer in page 
+	?>
+	<li><?php echo $ans2;?></li> <br>
+	<?php 
+ #select ans3
+	$tableName = 'questions' ;
+	$columnName= 'answer3';
+	$q = $db->query("SELECT `$columnName` FROM `$tableName` WHERE Level = '$level' AND chapter ='$chapter'  AND course='$course' AND ID='$ID' "); 
+	$f = $q->fetch();
+	$ans3 = $f[$columnName];
+# display answer in page 
+	?>
+	<li><?php echo $ans3;?></li> <br>
+	<?php 
+ #select ans4
+	$tableName = 'questions' ;
+	$columnName= 'answer4';
+	$q = $db->query("SELECT `$columnName` FROM `$tableName` WHERE Level = '$level' AND chapter ='$chapter'  AND course='$course' AND ID='$ID' "); 
+	$f = $q->fetch();
+	$ans4 = $f[$columnName];
+# display answer in page 
+	?>
+	<li><?php echo $ans4;?></li> <br>
+	<?php 
+
+
+	echo "</ol> ";
+	echo "</fieldset> ";
+	$_SESSION["QuestionNum"] ++ ; }
+	
+
+
+ 
+
+
+	
 
 	?>

@@ -58,7 +58,8 @@ if (courseValid( $_SESSION["course"],$_SESSION["profName"],$db)) {
 		if (noResult($_POST['course'],$db)){echo "<h3>There is no result to View </h3>";}
 			else {viewResult($_POST['course'],$db);}
 }
-	else if (isset($_POST['genExam'])) {$_SESSION["course"]=$_POST['course'] ;echo "generating exam";}
+	else if (isset($_POST['genExam'])) {$_SESSION["course"]=$_POST['course'] ;echo "generating exam";
+header( "Location:exam.php" );}
 	else if (isset($_POST['rules'])) {$_SESSION["course"]=$_POST['course'] ;header( "Location:examRules.php" );}  
 
 	
