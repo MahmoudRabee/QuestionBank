@@ -1,12 +1,14 @@
 <?php 
 	session_start(); #resume the session 
 	include  'connectDB.php' ; #connect database
-	if (Null == getResult($_SESSION["studentID"],$_SESSION["course"],$db)){
+	// if (Null == getResult($_SESSION["studentID"],$_SESSION["course"],$db)){
 
 
 		if (isset($_SESSION["profName"])){
 			if (enoughQuestion($_SESSION["course"],$db)) {
+				echo '<button onClick="window.print()">Print Exam</button><br>';
 				GenerateExamToProf($_SESSION["course"] , $db) ;
+				
 				echo '<a href="http://localhost:8080/QuestionBank/profControl.php">Back to control Page</a>';
 
 			}
@@ -16,6 +18,7 @@
 			}
 		}
 		else if ((isset($_SESSION["studentName"]))){
+if (Null == getResult($_SESSION["studentID"],$_SESSION["course"],$db)){
 			if (enoughQuestion($_SESSION["course"],$db)) {
 				if (!(isset($_POST['result']))) {
 					GenerateExam($_SESSION["course"] , $db) ; 
@@ -44,6 +47,13 @@
 					echo '<a href="http://localhost:8080/QuestionBank/studentControl.php">Back to control Page</a>';
 
 				}
+}
+else {
+	echo "<h3>You already Take exam in this course</h3><br>";
+	echo '<a href="http://localhost:8080/QuestionBank/logout.php">Logout</a><br>';
+	echo '<a href="http://localhost:8080/QuestionBank/studentControl.php">Back to control Page</a>';
+}
+				
 
 			}
 
@@ -52,12 +62,7 @@
 header( "refresh:5;url=bank.php" );# go to control pages
 echo ' wait to redirect to main page.';} 
 
-}
-else {
-	echo "<h3>You already Take exam in this course</h3><br>";
-	echo '<a href="http://localhost:8080/QuestionBank/logout.php">Logout</a><br>';
-	echo '<a href="http://localhost:8080/QuestionBank/studentControl.php">Back to control Page</a>';
-}
+
 function enoughQuestion($course,$db)
 {
 	$number_of_chapters = getNOchapter( $course,$db);
