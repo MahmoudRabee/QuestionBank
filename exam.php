@@ -66,6 +66,7 @@ echo ' wait to redirect to main page.';}
 function enoughQuestion($course,$db)
 {
 	$number_of_chapters = getNOchapter( $course,$db);
+	if ($number_of_chapters == false) {return False ;}
 	for ($i = 1 ; $i <=$number_of_chapters ; $i++){
 		$existEasyNumber = getLevelID($course,1,$i,$db); 
 		$existMeduimNumber = getLevelID($course,2,$i,$db); 

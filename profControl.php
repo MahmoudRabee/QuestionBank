@@ -133,11 +133,9 @@ try {
     // set the resulting array to associative
     $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
 
-print_r($result) ;
-echo "<br><br>";
 $allResults =$stmt->fetchAll() ; 
-print_r($allResults)  ;
-echo "<br><br>";
+
+echo "<br><h2>Results</h2><br>";
 
 ////////////////////////////
 ?><table style="width:100%">
